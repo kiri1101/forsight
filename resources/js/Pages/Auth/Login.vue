@@ -1,90 +1,150 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import Checkbox from "@/Components/Checkbox.vue";
+import AuthLayout from "@/Layouts/AuthLayout.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 
 defineProps({
-    canResetPassword: Boolean,
-    status: String,
+  canResetPassword: Boolean,
+  status: String,
 });
 
 const form = useForm({
-    email: '',
-    password: '',
-    remember: false,
+  email: "",
+  password: "",
+  remember: false,
 });
 
 const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
-    });
+  form.post(route("login"), {
+    onFinish: () => form.reset("password"),
+  });
 };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Log in" />
+  <AuthLayout>
+    <Head title="Login" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+    <section>
+      <form @submit.prevent="submit">
+        <div class="place-self-center">
+          <Link href="/">
+            <ApplicationLogo class="w-20 h-20 text-gray-500 fill-current" />
+          </Link>
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
+        <div class="text-center">
+          <p>Hi there!</p>
+          <p>Login to your dashboard</p>
+        </div>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+        <div>
+          <InputLabel for="email" value="Email" />
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+          <TextInput
+            id="email"
+            type="email"
+            class="block w-full mt-1"
+            v-model="form.email"
+            required
+            autofocus
+            autocomplete="username"
+          />
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+          <InputError class="mt-2" :message="form.errors.email" />
+        </div>
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
+        <div class="mt-4">
+          <InputLabel for="password" value="Password" />
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+          <TextInput
+            id="password"
+            type="password"
+            class="block w-full mt-1"
+            v-model="form.password"
+            required
+            autocomplete="current-password"
+          />
 
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
-                </label>
-            </div>
+          <InputError class="mt-2" :message="form.errors.password" />
+        </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >
-                    Forgot your password?
-                </Link>
+        <div class="block mt-4">
+          <label class="flex items-center">
+            <Checkbox name="remember" v-model:checked="form.remember" />
+            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+          </label>
+        </div>
 
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+        <PrimaryButton
+          class="grid"
+          :class="{ 'opacity-25': form.processing }"
+          :disabled="form.processing"
+        >
+          Log in
+        </PrimaryButton>
+
+        <div class="flex items-center justify-between mt-4">
+          <Link
+            v-if="canResetPassword"
+            :href="route('password.request')"
+            class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+          >
+            Forgot your password?
+          </Link>
+
+          <Link
+            :href="route('register')"
+            class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+          >
+            Create a new account
+          </Link>
+        </div>
+      </form>
+    </section>
+  </AuthLayout>
 </template>
+
+<style scoped>
+section {
+  height: 100%;
+  display: grid;
+}
+
+section > form {
+  display: grid;
+  min-width: 70%;
+  padding: 2rem;
+}
+
+@media screen and (min-width: 768px) {
+  section {
+    justify-items: end;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("");
+  }
+
+  section > form {
+    min-width: 30%;
+    background-color: rgb(250, 249, 249);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  section {
+    place-items: center;
+  }
+}
+
+form {
+  gap: 0.5rem;
+  color: rgb(67, 67, 67);
+}
+</style>

@@ -6,6 +6,8 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
         <!-- iziToast style css -->
         <link href="{{ asset('css/iziToast.css') }}" rel="stylesheet">
         <!-- Fonts -->
@@ -17,7 +19,7 @@
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
     </head>
-    <body class="font-sans antialiased overscroll-none">
+    <body class="w-full h-screen font-sans antialiased overscroll-none">
         @inertia
 
         <!-- iziToast script -->

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Core\Verification\EmailVerificationController;
 use App\Http\Controllers\ProfileController;
 use App\Notifications\SlackNotifcation;
 use Illuminate\Foundation\Application;
@@ -26,11 +27,6 @@ Route::get('/send/slack-notification', function() {
     $user->notify(new SlackNotifcation($message));
     dd('slack sent');
 });
-
-Route::get('/test', function() {
-    return Inertia::render('app/Home');
-});
-
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
