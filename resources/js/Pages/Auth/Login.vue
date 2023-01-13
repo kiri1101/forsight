@@ -39,8 +39,7 @@ const submit = () => {
         </div>
 
         <div class="text-center">
-          <p>Hi there!</p>
-          <p>Login to your dashboard</p>
+          <p>Hi there! <br />Login to your dashboard</p>
         </div>
 
         <div>
